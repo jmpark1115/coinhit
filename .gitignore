@@ -1,2 +1,10 @@
 .idea
 trading.conf
+build/
+dist/
+venv/
+__pycache__/
+*.spec
+Exer1.py
+Exer2.py
+MyTutorExer.ui
