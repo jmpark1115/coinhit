@@ -1,12 +1,8 @@
-import sys, time
+import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
-import bitmexTr1
-
 form_class = uic.loadUiType("BitmexTr.ui")[0]
-
-
 
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
