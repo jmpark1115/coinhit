@@ -5,7 +5,6 @@ import time
 import os, sys
 
 from configparser import ConfigParser
-import math
 
 myconfig = ConfigParser()
 myconfig.read('trading.conf')
@@ -59,7 +58,7 @@ def best_offer():
         bid_price = orderbooks[1]['price']
         bid_qty   = orderbooks[1]['size']
 
-        logger.info("best offer Buy {}@{} - Sell{}@{}".format(bid_qty, bid_price, ask_qty, ask_price))
+        logger.info("best offer Buy {}@{} - Sell {}@{}".format(bid_qty, bid_price, ask_qty, ask_price))
     except Exception as e:
         logger.error("orderbook error occurred {}" .format(e))
 
@@ -70,18 +69,23 @@ def best_offer():
 
 def monitoringTr(orders):
 
+    # 주문 목록을 확인한다
     for order in orders:
         print(order)
 
+    # 현재의 bid와 ask 호가와 물량을 확인한다
     ask_price, bid_price = best_offer()
 
-    # step1 : 주문하기
+    # step1 : 주문 목록에 따라 주문한다
     for order in orders:
+        # 주문 준비가 되어 있으면 entry price 로 주문 가격을 설정한다
         if order['orderID'] == 'None' and order['status'] == 'Ready':
             order['price'] = order['entry_price']
+            # 주문 조건이 되어 주문한다
             if bid_price > order['entry_price']:
                 resp = bitmex.place_order(quantity=order['orderQty'], price=order['price'])
                 time.sleep(0.1)
+                # 주문 ID 와 상태를 저장한다
                 orderID = resp.get('orderID', 'None')
                 if orderID != 'None':
                     order['orderID'] = orderID
@@ -98,13 +102,17 @@ def monitoringTr(orders):
     # for ord in get_orders:
     #     logger.debug("Get_Orders %s %s %d %d %s"
     #                  % (ord['orderID'][:9], ord['side'], ord['orderQty'], ord['leavesQty'], ord['ordStatus']))
+    # 주문들 중에서
     for order in orders:
+        # 주문체결된 것이 있는지 확인
         for ord in get_orders:
+            # 주문들 중 주문체결 된 것이 있다
             if ord['orderID'] == order['orderID']:
+                # 주문의 상태를 업데이트
                 order['status'] = ord['ordStatus']
-                # check if parent order is contracted
-                # Step2 : patent 중에 주문 체결이 되었으면 child 주문을 낸다
+                # Step2 : patent order 중에 주문 체결이 되었으면 child 주문을 낸다
                 if ord['ordStatus'] == 'Filled' and ord['leavesQty'] == 0:
+                    # 자식 주문이 아직 없으면 자식 주문을 낸다.  $2 비싸게 판다
                     if order['child'] == 'None':
                         c_order = dict()
                         c_order['price']    = order['entry_price'] + 2
@@ -115,8 +123,10 @@ def monitoringTr(orders):
                         orderID = resp.get('orderID', 'None')
                         c_order['orderID'] = orderID
                         c_order['status']  = resp['ordStatus']
+                        # 자식 주문을 등록
                         order['child']     = c_order
 
+            # 주문 중에 자식 주문이 있다면 상태를 업데이트 한다.
             if order['child'] != 'None' and ord['orderID'] == order['child']['orderID']:
                 order['child']['status'] = ord['ordStatus']
                 # step3 : child 중에 주문 체결이 되었으면 최초 상태로 전환한다
