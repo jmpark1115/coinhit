@@ -70,8 +70,8 @@ def best_offer():
 def monitoringTr(orders):
 
     # 주문 목록을 확인한다
-    for order in orders:
-        print(order)
+    # for order in orders:
+    #     print(order)
 
     # 현재의 bid와 ask 호가와 물량을 확인한다
     ask_price, bid_price = best_offer()
@@ -139,8 +139,8 @@ def monitoringTr(orders):
 def main_tradingTr():
 
     e_orders = [
-        {'entry_price': 3805, 'orderID': 'None', 'orderQty': 100, 'status': 'Ready', 'child':'None'},
-        {'entry_price': 3800, 'orderID': 'None', 'orderQty': 200, 'status': 'Ready', 'child':'None'},
+        {'entry_price': 10670, 'orderID': 'None', 'orderQty': 100, 'status': 'Ready', 'child':'None'},
+        {'entry_price': 10668, 'orderID': 'None', 'orderQty': 200, 'status': 'Ready', 'child':'None'},
     ]
     while True:
         sys.stdout.write("-----\n")
