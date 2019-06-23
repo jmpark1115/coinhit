@@ -1,9 +1,13 @@
+import sys
 from bitmex import BitMEX
 
 from configparser import ConfigParser
 
 myconfig = ConfigParser()
-myconfig.read('trading.conf')
+
+if not myconfig.read('trading.conf'):
+    print('There is not configurations file')
+    raise SystemExit
 
 MODE         = myconfig.get('DEFAULT', 'Mode')
 API_KEY      = myconfig.get(MODE, 'API_KEY')
