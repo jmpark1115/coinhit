@@ -16,3 +16,6 @@ if is_win and 'VERSION.dll' in dlls:
 # Applies only to non Windows platforms.
 
 if is_unix:
+
+
+[참고] https://github.com/Loran425/pyinstaller/commit/14b6e65642e4b07a4358bab278019a48dedf7460
