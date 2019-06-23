@@ -1,0 +1,18 @@
+pyinstaller 에러가 발생할 때 아래 코드를 추가한다.
+
+
+1. <myProject_path>\venv\Lib\site-packages\PyInstaller\depend/bindepend.py
+를 찾은 후
+
+2.  PyInstaller/depend/bindepend.py 에서 #874 line 에 if is_unix 앞에 추가한다.
+
+# Work around for python venv having VERSION.dll rather than pythonXY.dll
+if is_win and 'VERSION.dll' in dlls:
+    pydll = 'python%d%d.dll' % sys.version_info[:2]
+    if pydll in PYDYLIB_NAMES:
+        filename = getfullnameof(pydll)
+        return filename
+
+# Applies only to non Windows platforms.
+
+if is_unix:
