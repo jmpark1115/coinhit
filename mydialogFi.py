@@ -1,3 +1,6 @@
+'''
+master와 worker를 이용해 bitmexTr1 을 구동
+'''
 import sys, time
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *

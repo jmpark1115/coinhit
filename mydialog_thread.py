@@ -1,3 +1,7 @@
+'''
+PyQt5를 이용해 시간을 출력하는 예제
+master-worker 간 signal 주고 받음
+'''
 import sys, time
 from datetime import datetime
 from PyQt5.QtWidgets import *

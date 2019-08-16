@@ -1,3 +1,6 @@
+'''
+PyQT5 pushbusston, clicked, connect 연습
+'''
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic

@@ -1,3 +1,8 @@
+'''
+단독으로 bitmex 트레이딩 연습
+또는
+연동하여 mydialogFi.py 에서 윈도우 화면에서 구동할 수 있음
+'''
 from bitmex import BitMEX
 
 import logging
