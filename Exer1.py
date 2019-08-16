@@ -17,10 +17,3 @@ BASE_URL     = myconfig.get(MODE, 'BASE_URL')
 bitmex = BitMEX(apiKey=API_KEY, apiSecret=API_SECRET, base_url=BASE_URL)
 
 quotes = bitmex.orderbook(depth=1)
-
-for q in quotes:
-    print(q['symbol'])
-    print(q['side'])
-    print('%d@%f' %(q['size'], q['price']))
-    print('\n')
-
