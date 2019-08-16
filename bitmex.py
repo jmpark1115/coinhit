@@ -99,9 +99,12 @@ class BitMEX(object):
         postdict = {
             'symbol': self.symbol,
             'orderQty': quantity,
-            'price': price,
+            # 'price': price,        # 지정가 주문
             'clOrdID': clOrdID
         }
+        if price :
+            postdict['price'] = price
+        print(postdict)
         return self._curl_bitmex(path=endpoint, postdict=postdict, verb="POST")
 
     @authentication_required
