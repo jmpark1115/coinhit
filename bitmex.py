@@ -88,7 +88,7 @@ class BitMEX(object):
         return resp
 
     @authentication_required
-    def place_order(self, quantity, price):
+    def place_order(self, quantity, price, stop_px):
         """Place an order."""
         if price < 0:
             raise Exception("Price must be positive.")
@@ -104,8 +104,31 @@ class BitMEX(object):
         }
         if price :
             postdict['price'] = price
+        if stop_px:
+            postdict['stopPx'] = stop_px
         print(postdict)
         return self._curl_bitmex(path=endpoint, postdict=postdict, verb="POST")
+
+    @authentication_required
+    def place_order_with_leverage(self, quantity, price, leverage):
+        """Place an order."""
+        if price < 0:
+            raise Exception("Price must be positive.")
+
+        endpoint = "position/leverage"
+        # Generate a unique clOrdID with our prefix so we can identify it.
+        clOrdID = self.orderIDPrefix + base64.b64encode(uuid.uuid4().bytes).decode('utf8').rstrip('=\n')
+        postdict = {
+            'symbol': self.symbol,
+            'orderQty': quantity,
+            'price': price,        # 지정가 주문
+            'clOrdID': clOrdID,
+            'leverage' : leverage
+        }
+
+        return self._curl_bitmex(path=endpoint, postdict=postdict, verb="POST")
+
+
 
     @authentication_required
     def amend_order(self, ordID, price=0, qty=0):
