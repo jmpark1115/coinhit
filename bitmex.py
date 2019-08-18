@@ -88,7 +88,7 @@ class BitMEX(object):
         return resp
 
     @authentication_required
-    def place_order(self, quantity, price, stop_px):
+    def place_order(self, quantity, price, stop_px=0):
         """Place an order."""
         if price < 0:
             raise Exception("Price must be positive.")
