@@ -233,6 +233,21 @@ class BitMEX(object):
         content = resp.json()
         return content
 
+    def ohlcv(self, symbol, startTime, endTime, binSize='1h'):
+
+        url = 'https://testnet.bitmex.com/api/v1/trade/bucketed'
+
+        payload = {
+            'binSize': binSize,    # 1h, 1m, 1d
+            'symbol': symbol,
+            # 'count': count,
+            'startTime': startTime,
+            'endTime' : endTime,
+        }
+        resp = requests.get(url, params=payload)
+        content = resp.json()
+        return content
+
     def _curl_bitmex(self, path, query=None, postdict=None, timeout=None, verb=None, rethrow_errors=False,
                      max_retries=None):
         """Send a request to BitMEX Servers."""
