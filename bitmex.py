@@ -219,6 +219,20 @@ class BitMEX(object):
         # Only return orders that start with our clOrdID prefix.
         return [o for o in orders if str(o['clOrdID']).startswith(self.orderIDPrefix)]
 
+    def funding_rate(self, symbol, count):
+        """Get fimdomg rate"""
+
+        url = 'https://testnet.bitmex.com/api/v1/funding'
+        payload = {
+            'symbol': symbol, # 심벌
+            'reverse': True,  # 최신순 정렬
+            'count': count,   # 한번 query 시 가져오는 데이터의 갯수
+        }
+
+        resp = requests.get(url, params=payload)
+        content = resp.json()
+        return content
+
     def _curl_bitmex(self, path, query=None, postdict=None, timeout=None, verb=None, rethrow_errors=False,
                      max_retries=None):
         """Send a request to BitMEX Servers."""
