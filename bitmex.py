@@ -248,6 +248,16 @@ class BitMEX(object):
         content = resp.json()
         return content
 
+
+    def levarage(self, symbol, leverage):
+
+        endpoint = 'position/leverage'
+        postdict = {
+            'symbol': symbol,
+            'leverage': leverage,
+        }
+        return self._curl_bitmex(path=endpoint, postdict=postdict, verb='POST')
+
     def _curl_bitmex(self, path, query=None, postdict=None, timeout=None, verb=None, rethrow_errors=False,
                      max_retries=None):
         """Send a request to BitMEX Servers."""
