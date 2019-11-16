@@ -16,4 +16,21 @@ BASE_URL     = myconfig.get(MODE, 'BASE_URL')
 
 bitmex = BitMEX(apiKey=API_KEY, apiSecret=API_SECRET, base_url=BASE_URL)
 
-quotes = bitmex.orderbook(depth=1)
+content = bitmex.orderbook(1)
+print(content)
+
+ask_price = content[0]['price']
+
+content = bitmex.place_order(10, ask_price-100)
+print(content)
+
+time.sleep(5)
+
+
+content = bitmex.cancel(id)
+print(content)
+
+
+
+
+
