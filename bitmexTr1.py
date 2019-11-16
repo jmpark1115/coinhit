@@ -11,6 +11,7 @@ import os, sys
 
 from configparser import ConfigParser
 
+
 myconfig = ConfigParser()
 myconfig.read('trading.conf')
 
@@ -144,8 +145,8 @@ def monitoringTr(orders):
 def main_tradingTr():
 
     e_orders = [
-        {'entry_price': 10670, 'orderID': 'None', 'orderQty': 100, 'status': 'Ready', 'child':'None'},
-        {'entry_price': 10668, 'orderID': 'None', 'orderQty': 200, 'status': 'Ready', 'child':'None'},
+        {'entry_price': 8380, 'orderID': 'None', 'orderQty': 100, 'status': 'Ready', 'child':'None'},
+        {'entry_price': 8378, 'orderID': 'None', 'orderQty': 200, 'status': 'Ready', 'child':'None'},
     ]
     while True:
         sys.stdout.write("-----\n")
