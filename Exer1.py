@@ -1,4 +1,6 @@
 import sys
+import time
+
 from bitmex import BitMEX
 
 from configparser import ConfigParser
